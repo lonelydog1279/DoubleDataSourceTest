@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 对应 Mapper 接口全路径 -->
+<mapper namespace="com.hsbc.doubledatasourcetest.mybatis.mapper.OracleUserMapper">
+
+    <resultMap id="OracleUserResultMap" type="OracleUser">
+        <id column="ID" property="id" jdbcType="BIGINT"/>
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR"/>
+        <result column="AGE" property="age" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 根据 ID 查询用户 -->
+    <select id="selectById" resultType="OracleUser">
+        SELECT ID, USER_NAME, AGE
+        FROM T_ORACLE_USER
+        WHERE ID = #{id, jdbcType=BIGINT}
+    </select>
+
+    <!-- 查询所有用户 -->
+    <select id="selectAll" resultType="OracleUser">
+        SELECT ID, USER_NAME, AGE
+        FROM T_ORACLE_USER
+        ORDER BY ID ASC
+    </select>
+
+</mapper>

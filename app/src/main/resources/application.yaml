@@ -1,0 +1,51 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    oracle:
+      driver-class-name: oracle.jdbc.OracleDriver
+      jdbc-url: jdbc:oracle:thin:@//127.0.0.1:1521/XEPDB1
+      username: app_user
+      password: AppUser123456
+      hikari:
+        maximum-pool-size: 10
+        minimum-idle: 2
+        idle-timeout: 300000
+        read-only: true
+    postgres:
+      driver-class-name: org.postgresql.Driver
+      jdbc-url: jdbc:postgresql://localhost:5432/postgres
+      username: postgresdocker
+      password: postgresdocker
+      hikari:
+        maximum-pool-size: 10
+        minimum-idle: 2
+        idle-timeout: 300000
+        read-only: true
+#  jpa:
+#    entity-scan-base-packages: com.hsbc.doubledatasourcetest.jpa.entity,com.hsbc.doubledatasourcetest.jpa1.entity
+#    hibernate:
+#      ddl-auto: none
+#    properties:
+#      hibernate:
+#        show_sql: false
+#        format_sql: false
+#        default_schema: public
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        naming:
+#          physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    open-in-view: false
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  mapper-locations:
+    - classpath:mappers/*.xml
+  type-aliases-package: com.hsbc.doubledatasourcetest.mybatis.model
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          jpa: DEBUG
