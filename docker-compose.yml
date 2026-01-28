@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./qiankun-main/dist:/usr/share/nginx/html/main:ro
+      - ./vue-qiankun-element/dist:/usr/share/nginx/html/subapp:ro
+#    depends_on:
+#      - subapp
+#
+#  # 子应用也可以单独起一个服务（开发时更灵活）
+#  subapp:
+#    image: nginx:alpine
+#    volumes:
+#      - ./vue-qiankun-element/dist:/usr/share/nginx/html:ro
+#      - ./subapp-nginx.conf:/etc/nginx/nginx.conf:ro
+#    expose:
+#      - "80"

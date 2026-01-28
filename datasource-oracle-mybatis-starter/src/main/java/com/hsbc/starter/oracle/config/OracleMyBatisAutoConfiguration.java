@@ -17,12 +17,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Oracle + MyBatis Auto Configuration (Read-only mode)
@@ -69,8 +65,9 @@ public class OracleMyBatisAutoConfiguration {
         SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
         factory.setDataSource(oracleDataSource);
 
-        if (mybatisProperties.getMapperLocations() != null) {
-            factory.setMapperLocations(resolveMapperLocations(mybatisProperties.getMapperLocations()));
+        Resource[] mapperLocations = mybatisProperties.resolveMapperLocations();
+        if (mapperLocations != null && mapperLocations.length > 0) {
+            factory.setMapperLocations(mapperLocations);
         }
         if (mybatisProperties.getTypeAliasesPackage() != null) {
             factory.setTypeAliasesPackage(mybatisProperties.getTypeAliasesPackage());
@@ -96,26 +93,4 @@ public class OracleMyBatisAutoConfiguration {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
-    private Resource[] resolveMapperLocations(String[] mapperLocations) throws IOException {
-        if (mapperLocations == null || mapperLocations.length == 0) {
-            return new Resource[0];
-        }
-
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        List<Resource> resources = new ArrayList<>();
-
-        for (String location : mapperLocations) {
-            if (location != null && !location.trim().isEmpty()) {
-                for (Resource resource : resolver.getResources(location.trim())) {
-                    if (resource.exists() && resource.isFile()
-                            && resource.getFilename() != null
-                            && resource.getFilename().endsWith(".xml")) {
-                        resources.add(resource);
-                    }
-                }
-            }
-        }
-
-        return resources.toArray(new Resource[0]);
-    }
 }

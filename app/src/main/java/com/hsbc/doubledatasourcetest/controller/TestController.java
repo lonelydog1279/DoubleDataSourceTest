@@ -31,8 +31,8 @@ public class TestController {
     }
 
     @PostMapping("/test1")
-    public void test2(@RequestBody Product product) {
-        testService.addProduct(product);
+    public Product test2(@RequestBody Product product) {
+        return testService.addProduct(product);
     }
 
     @GetMapping("/testA")

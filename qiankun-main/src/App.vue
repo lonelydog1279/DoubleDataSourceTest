@@ -17,14 +17,6 @@ const isCollapse = ref(false)
 // 判断是否在子应用页面
 const isInSubApp = computed(() => currentPath.value.startsWith('/subapp'))
 
-// 子应用导航菜单
-const subAppNavItems = [
-  { path: '/subapp', label: '首页', icon: 'HomeFilled' },
-  { path: '/subapp/products', label: '产品', icon: 'ShoppingCart' },
-  { path: '/subapp/users', label: '用户', icon: 'User' },
-  { path: '/subapp/config', label: '配置', icon: 'Setting' }
-]
-
 // 获取当前子应用的路由路径
 const subAppRoute = computed(() => {
   if (currentPath.value === '/subapp') return '/'

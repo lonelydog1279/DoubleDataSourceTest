@@ -75,15 +75,9 @@ public class TestService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void addProduct(Product product) {
+    public Product addProduct(Product product) {
         log.info("[Business Operation] Start adding product: {}", product);
-//        productRepository.save(product);
-
-        oracleUserMapper.selectAll();
-
-//        productRepository.deleteById(3L);
-
-//        productRepository.save(product);
+        return productRepository.save(product);
 
     }
 

@@ -44,7 +44,9 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   'update:visible': [value: boolean]
-  'success': []
+  'submitting': []
+  'success': [product: Product]
+  'error': [message: string]
 }>()
 
 const formRef = ref<FormInstance>()
@@ -85,14 +87,16 @@ const handleSubmit = async () => {
   await formRef.value.validate(async (valid) => {
     if (valid) {
       submitting.value = true
+      emit('submitting')
       try {
-        await addProduct(form)
+        const newProduct = await addProduct(form)
         ElMessage.success('Product added successfully')
         emit('update:visible', false)
-        emit('success')
+        emit('success', newProduct)
       } catch (error) {
         console.error('Failed to add product:', error)
         ElMessage.error('Failed to add product')
+        emit('error', 'Failed to add product')
       } finally {
         submitting.value = false
       }

@@ -16,12 +16,18 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(ElementPlus)
 app.mount('#main-app')
 
+// 根据环境选择子应用入口
+const isProduction = import.meta.env.PROD
+const subAppEntry = isProduction
+  ? '/dual-datasource-test/'  // 生产环境：通过 nginx 代理
+  : '//localhost:5173/dual-datasource-test/' // 开发环境：直接访问 vite dev server
+
 // Register micro apps
 registerMicroApps(
   [
     {
       name: 'vue-qiankun-element',
-      entry: '//localhost:5173',
+      entry: subAppEntry,
       container: '#subapp-container',
       // 支持子应用的所有路由
       activeRule: (location) => {

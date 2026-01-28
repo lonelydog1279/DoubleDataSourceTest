@@ -35,6 +35,12 @@ renderWithQiankun({
   mount(props) {
     console.log('[vue-qiankun-element] mount with props:', props)
     render(props)
+    // 挂载后同步路由：根据当前 URL 导航到正确的子应用路由
+    const currentPath = window.location.pathname
+    if (currentPath.startsWith('/subapp')) {
+      const subPath = currentPath.replace('/subapp', '') || '/'
+      routerInstance.replace(subPath)
+    }
   },
   bootstrap() {
     console.log('[vue-qiankun-element] bootstrap')
