@@ -39,7 +39,8 @@ npm run dev
 
 ```typescript
 // router/index.ts
-const history = createWebHistory('/')  // 使用浏览器 History 模式
+const routerBase = import.meta.env.VITE_ROUTER_BASE || '/dual-datasource-test/'
+const history = createWebHistory(routerBase)  // 使用浏览器 History 模式
 ```
 
 #### 可用路由
@@ -54,10 +55,10 @@ const history = createWebHistory('/')  // 使用浏览器 History 模式
 #### URL 示例
 
 ```
-http://localhost:5173/                    # 首页
-http://localhost:5173/products            # 产品页面
-http://localhost:5173/users               # 用户页面
-http://localhost:5173/config              # 配置页面
+http://localhost:5173/dual-datasource-test/                    # 首页
+http://localhost:5173/dual-datasource-test/products            # 产品页面
+http://localhost:5173/dual-datasource-test/users               # 用户页面
+http://localhost:5173/dual-datasource-test/config              # 配置页面
 ```
 
 #### 特点
@@ -92,7 +93,8 @@ npm run dev
 ```typescript
 // router/index.ts
 const isQiankun = qiankunWindow.__POWERED_BY_QIANKUN__
-const history = createMemoryHistory('/subapp')  // 使用内存路由模式
+const qiankunRouterBase = import.meta.env.VITE_QIANKUN_ROUTER_BASE || '/subapp'
+const history = createWebHistory(qiankunRouterBase)  // 使用 Web History 模式，base 为 /subapp
 ```
 
 #### 主应用路由配置
@@ -126,7 +128,7 @@ http://localhost:8000/subapp/config       # 配置页面
 #### 特点
 
 - 需要通过主应用访问
-- 使用内存路由 (Memory History)，避免与主应用路由冲突
+- 使用 Web History 模式，base 设为 `/subapp`
 - 主应用侧边栏提供导航入口
 - 右上角显示 "微前端模式" 标签
 - 所有子应用路由都以 `/subapp` 为前缀
@@ -142,10 +144,14 @@ http://localhost:8000/subapp/config       # 配置页面
 export function createRouterInstance() {
   const isQiankun = qiankunWindow.__POWERED_BY_QIANKUN__
 
-  // 根据运行环境选择不同的路由模式
+  // 从环境变量读取 router base
+  const routerBase = import.meta.env.VITE_ROUTER_BASE || '/dual-datasource-test/'
+  const qiankunRouterBase = import.meta.env.VITE_QIANKUN_ROUTER_BASE || '/subapp'
+
+  // 根据运行环境选择不同的 base
   const history = isQiankun
-    ? createMemoryHistory('/subapp')  // 微前端：内存路由
-    : createWebHistory('/')           // 独立：Web 路由
+    ? createWebHistory(qiankunRouterBase)  // 微前端：base 为 /subapp
+    : createWebHistory(routerBase)         // 独立：base 为 /dual-datasource-test/
 
   return createRouter({ history, routes })
 }

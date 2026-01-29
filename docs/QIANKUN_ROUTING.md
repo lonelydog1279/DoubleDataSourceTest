@@ -114,10 +114,14 @@ const routes = [
 export function createRouterInstance() {
   const isQiankun = qiankunWindow.__POWERED_BY_QIANKUN__
 
+  // 从环境变量读取 router base
+  const routerBase = import.meta.env.VITE_ROUTER_BASE || '/dual-datasource-test/'
+  const qiankunRouterBase = import.meta.env.VITE_QIANKUN_ROUTER_BASE || '/subapp'
+
   // 关键：根据运行环境设置不同的 base
   const history = isQiankun
-    ? createWebHistory('/subapp')  // qiankun 环境
-    : createWebHistory('/')        // 独立运行
+    ? createWebHistory(qiankunRouterBase)  // qiankun 环境，base 为 /subapp
+    : createWebHistory(routerBase)         // 独立运行，base 为 /dual-datasource-test/
 
   return createRouter({ history, routes })
 }
@@ -206,11 +210,11 @@ const navigate = (path: string) => {
 ```bash
 cd vue-qiankun-element
 npm run dev
-# 访问 http://localhost:5173/products
+# 访问 http://localhost:5173/dual-datasource-test/products
 ```
 
-- `base = '/'`
-- URL: `http://localhost:5173/products`
+- `base = '/dual-datasource-test/'`
+- URL: `http://localhost:5173/dual-datasource-test/products`
 
 ### 开发模式（qiankun）
 
