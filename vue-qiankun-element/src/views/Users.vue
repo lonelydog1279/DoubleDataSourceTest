@@ -22,8 +22,8 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { ArrowLeft, Refresh } from '@element-plus/icons-vue'
-import type { OracleUser } from '@/types/defines'
-import { fetchOracleUsers } from '@/api/api'
+import { fetchOracleUsers } from '@/api'
+import type { OracleUser } from '@/api/types'
 import UsersTab from '@/views/UsersTab.vue'
 
 const router = useRouter()

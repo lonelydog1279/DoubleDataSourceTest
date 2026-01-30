@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import type { OracleUser } from '@/types/defines'
+import type { OracleUser } from '@/api/types'
 
 defineProps<{
   data: OracleUser[]

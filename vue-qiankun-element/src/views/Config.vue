@@ -18,8 +18,8 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { ArrowLeft } from '@element-plus/icons-vue'
-import type { AppConfig } from '@/types/defines'
-import { fetchAppConfig } from '@/api/api'
+import { fetchAppConfig } from '@/api'
+import type { AppConfig } from '@/api'
 import ConfigTab from '@/views/ConfigTab.vue'
 
 const router = useRouter()

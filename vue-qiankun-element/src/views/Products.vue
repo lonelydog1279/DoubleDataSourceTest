@@ -8,6 +8,9 @@
           <el-button type="primary" :icon="Plus" @click="dialogVisible = true">
             新增产品
           </el-button>
+          <el-button type="primary" :icon="Plus" @click="testVisible = true">
+            测试
+          </el-button>
         </div>
       </template>
 
@@ -35,6 +38,12 @@
         @success="handleSuccess"
         @error="handleError"
     />
+
+    <TestDialog v-model:visible="testVisible"
+      @submitting="handleTestSubmitting"
+      @success="handleTestSuccess"
+      @error="handleTestError"
+    />
   </div>
 </template>
 
@@ -43,15 +52,17 @@ import {ref, reactive, onMounted} from 'vue'
 import {useRouter} from 'vue-router'
 import {ElMessage} from 'element-plus'
 import {ArrowLeft, Plus, Refresh} from '@element-plus/icons-vue'
-import type {Product} from '@/types/defines'
-import {fetchProducts} from '@/api/api'
+import { fetchProducts } from '@/api'
+import type { Product } from '@/api/types'
 import ProductsTab from '@/views/ProductsTab.vue'
 import ProductFormDialog from '@/components/ProductFormDialog.vue'
+import TestDialog from "@/components/TestDialog.vue";
 
 const router = useRouter()
 const products = ref<Product[]>([])
 const loading = ref(false)
 const dialogVisible = ref(false)
+const testVisible = ref(false)
 
 // Alert 状态管理
 const alertState = reactive<{
@@ -93,6 +104,18 @@ const loadData = async () => {
   } finally {
     loading.value = false
   }
+}
+
+const handleTestSubmitting = (msg: string, msg1: string) => {
+  ElMessage.info("recieved submitting" + msg + msg1)
+}
+
+const handleTestSuccess = () => {
+  ElMessage.info("recieved success")
+}
+
+const handleTestError = () => {
+  ElMessage.info("recieved error")
 }
 
 const goBack = () => router.back()

@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AppConfig } from '@/types/defines'
+import type { AppConfig } from '@/api/types'
 
 defineProps<{
   data: AppConfig

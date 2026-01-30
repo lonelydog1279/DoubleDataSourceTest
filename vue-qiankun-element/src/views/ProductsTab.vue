@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Product } from '@/types/defines'
+import type { Product } from '@/api/types'
 
 defineProps<{
   data: Product[]

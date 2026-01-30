@@ -35,8 +35,8 @@
 import { ref, reactive, watch } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
-import type { Product } from '@/types/defines'
-import { addProduct } from '@/api/api'
+import { addProduct } from '@/api'
+import type { Product } from '@/api/types'
 
 const props = defineProps<{
   visible: boolean

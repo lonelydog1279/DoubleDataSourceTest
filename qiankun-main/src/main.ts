@@ -20,7 +20,7 @@ app.mount('#main-app')
 const isProduction = import.meta.env.PROD
 const subAppEntry = isProduction
   ? '/dual-datasource-test/'  // 生产环境：通过 nginx 代理
-  : '//localhost:5173/dual-datasource-test/' // 开发环境：直接访问 vite dev server
+  : '//localhost:5173' // 开发环境：直接访问 vite dev server
 
 // Register micro apps
 registerMicroApps(
